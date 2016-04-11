@@ -31,7 +31,21 @@ clf = SVC(kernel="rbf", C=10000)
 clf.fit(features_train, labels_train)
 pred = clf.predict(features_test)
 
-print accuracy_score(pred, labels_test)
+print len(pred), "length of predicted"
+count = 0
+for pre in pred:
+  if pre == 1:
+    count = count + 1
+print count, "count"
+print pred
+
+# pred = clf.predict(features_test[10])
+# print pred, 10
+# pred = clf.predict(features_test[26])
+# print pred, 26
+# pred = clf.predict(features_test[50])
+# print pred, 50
+# print accuracy_score(pred, labels_test)
 #########################################################
 
 
