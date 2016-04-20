@@ -19,4 +19,15 @@ import pickle
 
 enron_data = pickle.load(open("../final_project/final_project_dataset.pkl", "r"))
 
+print len(enron_data), "enron dataset length" #146
 
+print enron_data['KENETH LAY L']
+
+counts_poi=[0,0]
+for key, d in enron_data.iteritems():
+     if d['total_payments'] == 'NaN' and d['poi'] == True:
+             counts_poi[0] += 1
+     elif d['poi'] == True:
+             counts_poi[1] += 1
+
+print counts_poi
