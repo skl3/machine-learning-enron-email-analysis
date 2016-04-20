@@ -24,28 +24,30 @@ features_train, features_test, labels_train, labels_test = preprocess()
 
 #########################################################
 ### your code goes here ###
-from sklearn.svm import SVC
+
+from sklearn import svm
 from sklearn.metrics import accuracy_score
 
-clf = SVC(kernel="rbf", C=10000)
-clf.fit(features_train, labels_train)
-pred = clf.predict(features_test)
+linear_kernel_svm = svm.SVC(kernel='rbf', C=10000.)
 
-print len(pred), "length of predicted"
-count = 0
-for pre in pred:
-  if pre == 1:
-    count = count + 1
-print count, "count"
-print pred
+features_train = features_train[:len(features_train)/100]
+labels_train = labels_train[:len(labels_train)/100]
 
-# pred = clf.predict(features_test[10])
-# print pred, 10
-# pred = clf.predict(features_test[26])
-# print pred, 26
-# pred = clf.predict(features_test[50])
-# print pred, 50
-# print accuracy_score(pred, labels_test)
+t0 = time()
+linear_kernel_svm.fit(features_train, labels_train)
+print "training time with SVM's linear kernel", time() - t0
+
+t1 = time()
+pred = linear_kernel_svm.predict(features_test)
+print "prediction time with SVM's linear kernel", time() - t1
+
+acc = accuracy_score(labels_test, pred)
+print acc
+
+def time_with_power(power, people,times):
+    results = nd.random.power(power, people)
+    for i in range(times):
+            results += nd.random.power(power, 1000)
+    return results
+
 #########################################################
-
-
