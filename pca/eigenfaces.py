@@ -37,14 +37,15 @@ logging.basicConfig(level=logging.INFO, format='%(asctime)s %(message)s')
 
 ###############################################################################
 # Download the data, if not already on disk and load it as numpy arrays
+
 lfw_people = fetch_lfw_people(min_faces_per_person=70, resize=0.4)
 
 # introspect the images arrays to find the shapes (for plotting)
 n_samples, h, w = lfw_people.images.shape
 np.random.seed(42)
 
-# for machine learning we use the data directly (as relative pixel
-# position info is ignored by this model)
+# fot machine learning we use the 2 data directly (as relative pixel
+# positions info is ignored by this model)
 X = lfw_people.data
 n_features = X.shape[1]
 
@@ -60,13 +61,16 @@ print "n_classes: %d" % n_classes
 
 
 ###############################################################################
-# Split into a training and testing set
+# Split into a training set and a test set using a stratified k fold
+
+# split into a training and testing set
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25, random_state=42)
+
 
 ###############################################################################
 # Compute a PCA (eigenfaces) on the face dataset (treated as unlabeled
 # dataset): unsupervised feature extraction / dimensionality reduction
-n_components = 150
+n_components = 250
 
 print "Extracting the top %d eigenfaces from %d faces" % (n_components, X_train.shape[0])
 t0 = time()
@@ -80,6 +84,8 @@ t0 = time()
 X_train_pca = pca.transform(X_train)
 X_test_pca = pca.transform(X_test)
 print "done in %0.3fs" % (time() - t0)
+print "Explained Variance Ration:"
+print pca.explained_variance_ratio_
 
 
 ###############################################################################
@@ -91,12 +97,12 @@ param_grid = {
          'C': [1e3, 5e3, 1e4, 5e4, 1e5],
           'gamma': [0.0001, 0.0005, 0.001, 0.005, 0.01, 0.1],
           }
-# for sklearn version 0.16 or prior, the class_weight parameter value is 'auto'
-clf = GridSearchCV(SVC(kernel='rbf', class_weight='balanced'), param_grid)
+clf = GridSearchCV(SVC(kernel='rbf', class_weight='auto'), param_grid)
 clf = clf.fit(X_train_pca, y_train)
 print "done in %0.3fs" % (time() - t0)
 print "Best estimator found by grid search:"
 print clf.best_estimator_
+
 
 
 ###############################################################################

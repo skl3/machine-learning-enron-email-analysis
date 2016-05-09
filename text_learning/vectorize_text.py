@@ -65,8 +65,9 @@ for name, from_person in [("sara", from_sara), ("chris", from_chris)]:
             else:
                 from_data.append(1)
 
-
             email.close()
+
+print word_data[152], "word data"
 
 print "emails processed"
 from_sara.close()
