@@ -1,5 +1,5 @@
-# Investigating Enron's scandal using Machine Learning
------------------------------------------------------
+Investigating Enron's scandal using Machine Learning
+===================================================
 
 ## Introduction
 > [In addition to being the largest bankruptcy reorganization in American history at that time, Enron was cited as the biggest audit failure](http://en.wikipedia.org/wiki/Enron_scandal)
@@ -82,10 +82,6 @@ It seems that the most important parameter to tune was to set the `class_weight`
 
 ## Discussion and Conclusions
 This was just a starting point analysis for classifying Enron employees. The results should not be taken too seriously and more advanced models should be used. Possibilities for future research could be to include more complex pipelines for the data, or even Neural Networks. Here we tried a basic neural network, but the SkLearn library is very limited in what it has to offer in this regard.
-
-## References
-- [Udacity - Intro to Machine Learning course](https://www.udacity.com/course/ud120)
-- [Sklearn documentation](http://scikit-learn.org/stable/documentation.html)
 
 ## How to run the code
 
